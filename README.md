@@ -14,5 +14,5 @@ A JS script developed to automate the process of mass disabling notifications fr
    - Right-click on the page and select **Inspect**, or
    - Press `Ctrl+Shift+I` (Windows/Linux) or `Cmd+Option+I` (Mac).
 3. Click on the **Console** tab within the Developer Tools panel.
-4. Paste the contents of [`youtube-unsubscriber.js`](./youtube-unsubscriber.js) into the console.
+4. Paste the contents of [`youtube-mass-notification-disabler.js`](./youtube-mass-notification-disabler.js) into the console.
 5. Press `Enter` to execute the script.
