@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name        YouTube Disable All Notifications
 // @namespace   https://github.com/AlfEspadero
-// @version     1.2
+// @version     1.3
 // @description Adds a button to disable notifications for all subscribed channels
 // @match       https://www.youtube.com/feed/channels
 // @grant       GM_addStyle
 // @run-at      document-idle
-// @author	  	Alf
+// @author	  	AlfEspadero
 // ==/UserScript==
 
 (function () {
