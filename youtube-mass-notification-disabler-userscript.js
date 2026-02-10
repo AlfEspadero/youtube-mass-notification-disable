@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        YouTube Disable All Notifications
 // @namespace   https://github.com/AlfEspadero
-// @version     1.0
+// @version     1.1
 // @description Adds a button to disable notifications for all subscribed channels
 // @match       https://www.youtube.com/feed/channels
 // @grant       GM_addStyle
@@ -13,6 +13,9 @@
 
 	const ACTION_DELAY = 100;
 	const SCROLL_DELAY = 2000;
+
+	let cancelled = false;
+	let running = false;
 
 	const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -134,12 +137,14 @@
 
 	// main process — scroll, discover, and process all channels
 	const disableAllNotifications = async () => {
-		btn.disabled = true;
-		btn.textContent = "Running...";
+		cancelled = false;
+		running = true;
+		btn.textContent = "Stop";
+		btn.style.background = "#e65100";
 		let totalProcessed = 0;
 
 		try {
-			while (true) {
+			while (!cancelled) {
 				const channels = Array.from(
 					document.querySelectorAll("ytd-channel-renderer"),
 				);
@@ -158,30 +163,44 @@
 				}
 
 				for (const channel of unprocessed) {
+					if (cancelled) break;
 					await disableNotifications(channel);
 					channel.dataset.notifProcessed = "true";
 					totalProcessed++;
 					updateProgress(`Processed ${totalProcessed} channels...`);
 				}
 
+				if (cancelled) break;
 				window.scrollTo(0, document.documentElement.scrollHeight);
 				await wait(SCROLL_DELAY);
 			}
 
-			updateProgress(`Done! ${totalProcessed} channels processed.`);
-			console.log(
-				`Notification disable process completed. Total: ${totalProcessed}`,
-			);
+			if (cancelled) {
+				updateProgress(`Stopped. ${totalProcessed} channels processed.`);
+				console.log(`Process stopped by user. Total: ${totalProcessed}`);
+			} else {
+				updateProgress(`Done! ${totalProcessed} channels processed.`);
+				console.log(
+					`Notification disable process completed. Total: ${totalProcessed}`,
+				);
+			}
 		} catch (error) {
 			console.error("Error during notification disable:", error);
 			updateProgress(`Error after ${totalProcessed} channels.`);
 		} finally {
-			btn.disabled = false;
+			running = false;
 			btn.textContent = "Disable All Notifications";
+			btn.style.background = "";
 		}
 	};
 
 	btn.addEventListener("click", () => {
+		if (running) {
+			cancelled = true;
+			btn.textContent = "Stopping...";
+			btn.disabled = true;
+			return;
+		}
 		if (
 			confirm(
 				"Disable notifications for ALL subscribed channels?\n\nThis may take a while if you have many subscriptions.",
