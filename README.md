@@ -1,9 +1,9 @@
-# YouTube Unsubscriber
+# YouTube Mass Notification Disabler
 
-A JS script developed to automate the process of unsubscribing from all YouTube channels associated with a user's account. The script operates directly within the browser, requiring no additional installations or extensions.
+A JS script developed to automate the process of mass disabling notifications from all YouTube channels associated with a user's account. The script operates directly within the browser, requiring no additional installations or extensions.
 
 ## Features
-- Automates mass unsubscription from YouTube channels
+- Automates mass disabling notifications from YouTube channels
 - Compatible with all major browsers
 - Functions across all YouTube language interfaces
 - Simple execution through the browser's Developer Console
