@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        YouTube Disable All Notifications
 // @namespace   https://github.com/AlfEspadero
-// @version     1.1
+// @version     1.2
 // @description Adds a button to disable notifications for all subscribed channels
 // @match       https://www.youtube.com/feed/channels
 // @grant       GM_addStyle
@@ -110,8 +110,8 @@
     );
     const popupItems = popupContainer
       ? popupContainer.querySelectorAll(
-          "ytd-menu-service-item-renderer, tp-yt-paper-item, yt-list-item-view-model",
-        )
+        "ytd-menu-service-item-renderer, tp-yt-paper-item, yt-list-item-view-model",
+      )
       : [];
 
     const noneOption = Array.from(popupItems).find((item) =>
